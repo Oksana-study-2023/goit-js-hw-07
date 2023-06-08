@@ -9,7 +9,7 @@ function createGalleryElement(items) {
 
         let linkEl = document.createElement(`a`);
         linkEl.classList.add(`gallery__link`);
-        linkEl.href = item.original;
+        linkEl.dataset.href = item.original;
         itemEl.appendChild(linkEl);
 
         let imgEl = document.createElement(`img`);
@@ -31,10 +31,15 @@ function createGalleryElement(items) {
 
 function onGalleryItemClick(event) {
     event.preventDefault();
-    let clickedItemEl = event.target.closest(`.gallery__item`);
+    let clickedItemEl = event.target.closest(`.gallery__link`);
     if (!clickedItemEl) {
-        return;
+    return;
     }
+
+    const instance = basicLightbox.create(`
+    <img src = "${event.target.dataset.source}" width = "800" height = "600">`);
+    instance.show();
+
 }
 
 function bindEvents(galleryEl) {
@@ -50,13 +55,13 @@ function initCallery(items) {
 
 initCallery(galleryItems);
 
-// console.log(galleryItems);
-
-
-//   <ul class="gallery">
-//     <li class="gallery__item">
-//       <a class="gallery__link" href="large-image.jpg">
-//         <img class="gallery__image" src="small-image.jpg" data-source="large-image.jpg" alt="Image description" />
-//       </a>
-//     </li>
-//   </ul>
+// <li class="gallery__item">
+//   <a class="gallery__link" href="large-image.jpg">
+//     <img
+//       class="gallery__image"
+//       src="small-image.jpg"
+//       data-source="large-image.jpg"
+//       alt="Image description"
+//     />
+//   </a>
+// </li>
